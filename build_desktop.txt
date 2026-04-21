@@ -4,24 +4,38 @@ Recommended files in this folder:
 - requirements_desktop.txt
 - watermark_desktop.spec
 - build_desktop.command
+- build_dmg.command
+- windows_installer.iss
 
 macOS quick build:
 1. chmod +x build_desktop.command
 2. ./build_desktop.command
+3. chmod +x build_dmg.command
+4. ./build_dmg.command
 
 Manual macOS build:
 python3 -m pip install --user -r requirements_desktop.txt
 python3 -m PyInstaller --noconfirm watermark_desktop.spec
+hdiutil create -volname "AIWatermarkTool" -srcfolder dist/AIWatermarkTool.app -ov -format UDZO dist/AIWatermarkTool-mac.dmg
 
 Windows build:
 py -m pip install -r requirements_desktop.txt
 py -m PyInstaller --noconfirm watermark_desktop.spec
 
+Windows installer build:
+1. Install Inno Setup on Windows.
+2. Open windows_installer.iss with Inno Setup.
+3. Build the installer from that script.
+
 Output:
 - macOS app bundle: dist/AIWatermarkTool.app
+- macOS installer image: dist/AIWatermarkTool-mac.dmg
 - Windows executable folder: dist/AIWatermarkTool/
+- Windows installer: dist/AIWatermarkTool-Setup.exe
 
 Notes:
 - PDF document support needs PyMuPDF.
 - `.docx` support uses only Python standard library + XML/zip processing.
 - The desktop app now keeps only Word/PDF watermark removal.
+- mac users can drag the `.app` into `Applications` from the `.dmg`.
+- Windows users can run `AIWatermarkTool-Setup.exe` and choose desktop shortcut creation during install.
